@@ -3,8 +3,7 @@
 
 namespace Loki {
 
-    class AshOfWar /*:*/
-        /*public AshesOfWar*/ {
+    class AshOfWar {
 
     public:
         struct Properties {
@@ -27,10 +26,6 @@ namespace Loki {
         }
 
         void DoAshOfWar(const RE::Actor* a_actor);
-        void AssignMaps();
-
-        static std::vector<RE::EffectSetting*>   _effectVec;
-        static std::unordered_map<RE::EnchantmentItem*, RE::SpellItem*> _enchSpellMap;
 
     private:
         Properties _properties;

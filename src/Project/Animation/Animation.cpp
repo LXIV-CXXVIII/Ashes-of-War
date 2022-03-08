@@ -13,29 +13,11 @@ auto Loki::PlayAOWAnimation::ProcessEvent(const RE::TESMagicEffectApplyEvent* a_
 
     auto ptr = Loki::AshesOfWar::GetSingleton();
     if (auto actor = a_event->target.get()->As<RE::Actor>(); actor) {
-        for (auto idx : AshOfWar::_effectVec) {
+        for (auto idx : AshesOfWar::_effectVec) {
             if (a_event->magicEffect == idx->formID) {
-                actor->NotifyAnimationGraph("dw_AOW_Start");
-            } else if (a_event->magicEffect == idx->formID) {
-                actor->NotifyAnimationGraph("h2h_AOW_Start");
-            } else if (a_event->magicEffect == idx->formID) {
-                actor->NotifyAnimationGraph("1hm_AOW_Start");
-            } else if (a_event->magicEffect == idx->formID) {
-                actor->NotifyAnimationGraph("1hw_AOW_Start");
-            } else if (a_event->magicEffect == idx->formID) {
-                actor->NotifyAnimationGraph("2hm_AOW_Start");
-            } else if (a_event->magicEffect == idx->formID) {
-                actor->NotifyAnimationGraph("2hw_AOW_Start");
+                actor->NotifyAnimationGraph("AOW_Start");
             }
         }
-        /*
-        dw_AOW_Start
-        h2h_AOW_Start
-        1hm_AOW_Start
-        1hw_AOW_Start
-        2hm_AOW_Start
-        2hw_AOW_Start
-        */
     }
 
     return RE::BSEventNotifyControl::kContinue;

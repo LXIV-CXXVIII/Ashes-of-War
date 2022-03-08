@@ -66,7 +66,13 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface * a_
 {
     logger::info("loki_AshesOfWar loaded");
     SKSE::Init(a_skse);
-    SKSE::AllocTrampoline(16);
+    //SKSE::AllocTrampoline(16);
+
+    auto ptr = Loki::AshesOfWar::GetSingleton();
+
+    ptr->InstallAnimEventSink();
+    ptr->InstallEquipEventSink();
+    ptr->InstallMGEFEventSink();
 
     return true;
 }

@@ -11,8 +11,16 @@ void Loki::AshesOfWar::InstallEquipEventSink() {
 }
 
 void Loki::AshesOfWar::InstallAnimEventSink() {
-    auto sourceHolder = RE::ScriptEventSourceHolder::GetSingleton();
-    if (sourceHolder) { sourceHolder->AddEventSink(AnimationPayload::GetSingleton()); }
+    //auto sourceHolder = RE::ScriptEventSourceHolder::GetSingleton();
+    //if (sourceHolder) { sourceHolder->AddEventSink(AnimationPayload::GetSingleton()); }
+
+    auto player = RE::PlayerCharacter::GetSingleton();
+    RE::BSTSmartPointer<RE::BSAnimationGraphManager> animationGraphManagerPtr;
+    if (player->GetAnimationGraphManager(animationGraphManagerPtr))
+    {
+        RE::BShkbAnimationGraph* animationGraph = animationGraphManagerPtr->graphs[animationGraphManagerPtr->activeGraph].get();
+        animationGraph->AddEventSink(AnimationPayload::GetSingleton());
+    }
 }
 
 void Loki::AshesOfWar::AssignMaps() {
@@ -27,7 +35,7 @@ void Loki::AshesOfWar::AssignMaps() {
         logger::info("Reading {}...", path.string());
         try {
             const auto tbl = toml::parse_file(path.c_str());
-            auto& arr = *tbl.get_as<toml::array>("spells");
+            auto& arr = *tbl.get_as<toml::array>("Spell");
 
             for (auto&& elem : arr) {
                 auto& spellTable = *elem.as_table();
@@ -62,7 +70,7 @@ void Loki::AshesOfWar::AssignMaps() {
         }
     };
 
-    logger::info("Reading .toml files...");
+    logger::info("Reading _Spells.toml files...");
 
     auto baseToml = std::filesystem::path(basecfg);
     readToml(baseToml);
@@ -77,6 +85,6 @@ void Loki::AshesOfWar::AssignMaps() {
         }
     }
 
-    logger::info("Finished reading .toml files");
+    logger::info("Finished reading _Spells.toml files");
 
 }

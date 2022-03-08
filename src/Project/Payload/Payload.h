@@ -8,7 +8,7 @@ namespace Loki {
     public:
         static AnimationPayload* GetSingleton();
 
-        auto ProcessEvent(const RE::BSAnimationGraphEvent* a_event, RE::BSTEventSource<RE::BSAnimationGraphEvent>* a_eventSource)->RE::BSEventNotifyControl override;
+        auto ProcessEvent(const RE::BSAnimationGraphEvent* a_event, RE::BSTEventSource<RE::BSAnimationGraphEvent>* a_eventSource) -> RE::BSEventNotifyControl override;
 
     protected:
         AnimationPayload() = default;

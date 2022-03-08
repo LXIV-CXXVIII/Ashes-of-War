@@ -8,7 +8,7 @@ namespace Loki {
     public:
         static PlayAOWAnimation* GetSingleton();
 
-        auto ProcessEvent(const RE::TESMagicEffectApplyEvent* a_event, RE::BSTEventSource<RE::TESMagicEffectApplyEvent>* a_eventSource)->RE::BSEventNotifyControl override;
+        auto ProcessEvent(const RE::TESMagicEffectApplyEvent* a_event, RE::BSTEventSource<RE::TESMagicEffectApplyEvent>* a_eventSource) -> RE::BSEventNotifyControl override;
 
     protected:
         PlayAOWAnimation() = default;

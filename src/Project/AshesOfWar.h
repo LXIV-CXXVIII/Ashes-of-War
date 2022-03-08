@@ -72,7 +72,7 @@ namespace Loki {
                 }
             };
 
-            logger::info("Reading .toml files...");
+            logger::info("Reading _AshesOfWar.toml files...");
 
             auto baseToml = std::filesystem::path(basecfg);
             readToml(baseToml);
@@ -87,7 +87,9 @@ namespace Loki {
                 }
             }
 
-            logger::info("Finished reading .toml files");
+            logger::info("Finished reading _AshesOfWar.toml files");
+
+            AssignMaps();
 
         }
         virtual ~AshesOfWar() {
@@ -101,12 +103,12 @@ namespace Loki {
         void InstallMGEFEventSink();
         void InstallEquipEventSink();
         void InstallAnimEventSink();
-        void AssignMaps();
+        static void AssignMaps();
 
         static inline std::unordered_map<std::string, AshOfWar*> payloadMap = {};
 
-        static std::vector<RE::EffectSetting*>   _effectVec;
-        static std::unordered_map<RE::EnchantmentItem*, RE::SpellItem*> _enchSpellMap;
+        static inline std::vector<RE::EffectSetting*> _effectVec;
+        static inline std::unordered_map<RE::EnchantmentItem*, RE::SpellItem*> _enchSpellMap;
 
 	private:
 

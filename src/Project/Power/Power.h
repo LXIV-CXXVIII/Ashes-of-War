@@ -8,7 +8,7 @@ namespace Loki {
     public:
         static GiveAOWPower* GetSingleton();
 
-        auto ProcessEvent(const RE::TESEquipEvent* a_event, RE::BSTEventSource<RE::TESEquipEvent>* a_eventSource)->RE::BSEventNotifyControl override;
+        auto ProcessEvent(const RE::TESEquipEvent* a_event, RE::BSTEventSource<RE::TESEquipEvent>* a_eventSource) -> RE::BSEventNotifyControl override;
 
     protected:
         GiveAOWPower() = default;

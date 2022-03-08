@@ -10,7 +10,6 @@ auto Loki::AnimationPayload::ProcessEvent(const RE::BSAnimationGraphEvent* a_eve
     if (a_event->tag == NULL || a_event->payload == NULL) {
         return RE::BSEventNotifyControl::kContinue;
     }
-    auto ptr = AshesOfWar::GetSingleton();
     if (a_event->tag == "dw_AOW_Start") {
         auto aow = AshesOfWar::payloadMap.find((std::string)a_event->payload);
         if (aow != AshesOfWar::payloadMap.end()) {

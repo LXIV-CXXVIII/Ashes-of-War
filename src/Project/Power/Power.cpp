@@ -18,13 +18,13 @@ auto Loki::GiveAOWPower::ProcessEvent(const RE::TESEquipEvent* a_event, RE::BSTE
         if (form->IsWeapon()) {
             if (auto objectWEAP = form->As<RE::TESObjectWEAP>(); objectWEAP) {
                 if (a_event->equipped) {
-                    for (auto idx : AshOfWar::_enchSpellMap) {
+                    for (auto idx : AshesOfWar::_enchSpellMap) {
                         if (objectWEAP->formEnchanting->data.baseEnchantment->formID == idx.first->formID) {
                             a_event->actor.get()->As<RE::Actor>()->AddSpell(idx.second);
                         }
                     }
                 } else {
-                    for (auto idx : AshOfWar::_enchSpellMap) {
+                    for (auto idx : AshesOfWar::_enchSpellMap) {
                         if (objectWEAP->formEnchanting->data.baseEnchantment->formID == idx.first->formID) {
                             a_event->actor.get()->As<RE::Actor>()->RemoveSpell(idx.second);
                         }
