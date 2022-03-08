@@ -6,7 +6,7 @@ set(VCPKG_TARGET_TRIPLET "x64-windows-static" CACHE STRING "")
 # ---- Project ----
 
 project(
-	ExampleProject
+	loki_AshesOfWar
 	VERSION 1.0.0
 	LANGUAGES CXX
 )
@@ -117,6 +117,8 @@ find_package(spdlog REQUIRED)
 
 find_path(XBYAK_INCLUDE_DIRS "xbyak/xbyak.h")
 
+find_package(tomlplusplus REQUIRED CONFIG)
+
 # ---- Add source files ----
 
 set(headers
@@ -125,6 +127,16 @@ set(headers
 
 set(sources
 	src/main.cpp
+	src/Project/AshesOfWar.cpp
+	src/Project/AshesOfWar.h
+	src/Project/AoWObj/AshOfWarObj.cpp
+	src/Project/AoWObj/AshOfWarObj.h
+	src/Project/Animation/Animation.cpp
+	src/Project/Animation/Animation.h
+	src/Project/Payload/Payload.cpp
+	src/Project/Payload/Payload.h
+	src/Project/Power/Power.cpp
+	src/Project/Power/Power.h
 	src/PCH.cpp
 )
 
@@ -173,6 +185,7 @@ target_link_libraries(${PROJECT_NAME}
 	PUBLIC
 		CommonLibSSE::CommonLibSSE
 		spdlog::spdlog
+		tomlplusplus::tomlplusplus
 )
 
 target_link_options(${PROJECT_NAME}

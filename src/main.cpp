@@ -1,4 +1,4 @@
-﻿#include "C:/dev/ExamplePlugin-CommonLibSSE/build/simpleini-master/SimpleIni.h"
+﻿#include "Project/AshesOfWar.h"
 
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface * a_skse, SKSE::PluginInfo * a_info)
 {
@@ -10,7 +10,7 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface * 
         return false;
     }
 
-    *path /= "loki_NoFollowerAttackCollision.log"sv;
+    *path /= "loki_AshesOfWar.log"sv;
     auto sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(path->string(), true);
 #endif
 
@@ -26,10 +26,10 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface * 
     spdlog::set_default_logger(std::move(log));
     spdlog::set_pattern("%g(%#): [%^%l%$] %v"s);
 
-    logger::info("loki_NoFollowerAttackCollision v1.0.0");
+    logger::info("loki_AshesOfWar v1.0.0");
 
     a_info->infoVersion = SKSE::PluginInfo::kVersion;
-    a_info->name = "loki_NoFollowerAttackCollision";
+    a_info->name = "loki_AshesOfWar";
     a_info->version = 1;
 
     if (a_skse->IsEditor()) {
@@ -64,7 +64,7 @@ static void SKSEMessageHandler(SKSE::MessagingInterface::Message* message) {
 
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface * a_skse)
 {
-    logger::info("Climbing loaded");
+    logger::info("loki_AshesOfWar loaded");
     SKSE::Init(a_skse);
     SKSE::AllocTrampoline(16);
 
