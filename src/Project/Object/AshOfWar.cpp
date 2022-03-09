@@ -1,4 +1,5 @@
-#include "AshOfWarObj.h"
+#include "AshOfWar.h"
+#include "Project/AshesOfWar.h"
 
 void Loki::AshOfWar::DoAshOfWar(const RE::Actor* a_actor) {
     RE::Actor* actor = (RE::Actor*)a_actor;
@@ -18,8 +19,10 @@ void Loki::AshOfWar::DoAshOfWar(const RE::Actor* a_actor) {
 
         case Properties::DamageType::kElemental: {
             for (auto idx : actor->selectedPower->As<RE::SpellItem>()->effects) {
-                if (idx->baseEffect->formID == 0x0) {
-                    effectiveness = idx->effectItem.magnitude;
+                for (auto ind : AshesOfWar::_effectVec) {
+                    if (idx->baseEffect->formID == ind->formID) {
+                        effectiveness = idx->effectItem.magnitude;
+                    }
                 }
             }
             break;
@@ -39,5 +42,6 @@ void Loki::AshOfWar::DoAshOfWar(const RE::Actor* a_actor) {
         actor->GetMagicCaster(RE::MagicSystem::CastingSource::kInstant)->
             Cast(spell, false, actor, effectiveness, false, 0.0f, 0);
     }
+    //
 
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "Project/Animation/Animation.h"
-#include "Project/AoWObj/AshOfWarObj.h"
+#include "Project/Object/AshOfWar.h"
 #include "Project/Payload/Payload.h"
 #include "Project/Power/Power.h"
 

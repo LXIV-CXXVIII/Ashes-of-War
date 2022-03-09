@@ -49,15 +49,28 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Query(const SKSE::QueryInterface * 
 static void SKSEMessageHandler(SKSE::MessagingInterface::Message* message) {
 
     switch (message->type) {
-    case SKSE::MessagingInterface::kNewGame:
-    case SKSE::MessagingInterface::kPostLoadGame: {
-        break;
-    }
-    case SKSE::MessagingInterface::kPostLoad: {
-        break;
-    }
-    default:
-        break;
+        case SKSE::MessagingInterface::kDataLoaded: {
+            auto ptr = Loki::AshesOfWar::GetSingleton();
+
+            ptr->InstallAnimEventSink();
+            ptr->InstallEquipEventSink();
+            ptr->InstallMGEFEventSink();
+            break;
+        }
+        case SKSE::MessagingInterface::kNewGame: {
+            break;
+        }
+        case SKSE::MessagingInterface::kPostLoadGame: {
+            break;
+        }
+        case SKSE::MessagingInterface::kPostLoad: {
+            break;
+        }
+        case SKSE::MessagingInterface::kPostPostLoad: {
+            break;
+        }
+        default:
+            break;
     }
 
 }
@@ -68,11 +81,10 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface * a_
     SKSE::Init(a_skse);
     //SKSE::AllocTrampoline(16);
 
-    auto ptr = Loki::AshesOfWar::GetSingleton();
-
-    ptr->InstallAnimEventSink();
-    ptr->InstallEquipEventSink();
-    ptr->InstallMGEFEventSink();
+    auto messaging = SKSE::GetMessagingInterface();
+    if (!messaging->RegisterListener("SKSE", SKSEMessageHandler)) { // add callbacks for TrueHUD
+        return false;
+    }
 
     return true;
 }
