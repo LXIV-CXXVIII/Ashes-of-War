@@ -51,8 +51,6 @@ static void SKSEMessageHandler(SKSE::MessagingInterface::Message* message) {
     switch (message->type) {
         case SKSE::MessagingInterface::kDataLoaded: {
             auto ptr = Loki::AshesOfWar::GetSingleton();
-
-            ptr->InstallAnimEventSink();
             ptr->InstallEquipEventSink();
             ptr->InstallMGEFEventSink();
             break;

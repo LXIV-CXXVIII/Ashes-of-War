@@ -10,19 +10,6 @@ void Loki::AshesOfWar::InstallEquipEventSink() {
     if (sourceHolder) { sourceHolder->AddEventSink(GiveAOWPower::GetSingleton()); }
 }
 
-void Loki::AshesOfWar::InstallAnimEventSink() {
-    //auto sourceHolder = RE::ScriptEventSourceHolder::GetSingleton();
-    //if (sourceHolder) { sourceHolder->AddEventSink(AnimationPayload::GetSingleton()); }
-
-    auto player = RE::PlayerCharacter::GetSingleton();
-    RE::BSTSmartPointer<RE::BSAnimationGraphManager> animationGraphManagerPtr;
-    if (player->GetAnimationGraphManager(animationGraphManagerPtr))
-    {
-        RE::BShkbAnimationGraph* animationGraph = animationGraphManagerPtr->graphs[animationGraphManagerPtr->activeGraph].get();
-        animationGraph->AddEventSink(AnimationPayload::GetSingleton());
-    }
-}
-
 void Loki::AshesOfWar::AssignMaps() {
 
     constexpr auto path = L"Data/SKSE/Plugins/Spells";
@@ -49,7 +36,7 @@ void Loki::AshesOfWar::AssignMaps() {
                 logger::info("Enchantment Form ID -> {}", *ench);
                 auto pow = spellTable["PowerFormID"].value<RE::FormID>();
                 logger::info("Power Form ID -> {}", *pow);
-                if (auto enchantment = RE::TESForm::LookupByID(*eff)->As<RE::EnchantmentItem>(); enchantment) {
+                if (auto enchantment = RE::TESForm::LookupByID(*ench)->As<RE::EnchantmentItem>(); enchantment) {
                     if (auto power = RE::TESForm::LookupByID(*pow)->As<RE::SpellItem>(); power) {
                         _enchSpellMap.insert_or_assign(enchantment, power);
                     }

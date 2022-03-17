@@ -23,14 +23,16 @@ auto Loki::GiveAOWPower::ProcessEvent(const RE::TESEquipEvent* a_event, RE::BSTE
                             a_event->actor.get()->As<RE::Actor>()->AddSpell(idx.second);
                         }
                     }
-                } else {
+                } 
+                else {
                     for (auto idx : AshesOfWar::_enchSpellMap) {
                         if (objectWEAP->formEnchanting->data.baseEnchantment->formID == idx.first->formID) {
                             a_event->actor.get()->As<RE::Actor>()->RemoveSpell(idx.second);
                         }
                     }
                 }
-            } else {
+            } 
+            else {
                 logger::info("Invalid TESObjectWEAP pointer");
             }
         }

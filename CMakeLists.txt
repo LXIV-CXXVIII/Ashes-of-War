@@ -129,12 +129,8 @@ set(sources
 	src/main.cpp
 	src/Project/AshesOfWar.cpp
 	src/Project/AshesOfWar.h
-	src/Project/Object/AshOfWar.cpp
-	src/Project/Object/AshOfWar.h
 	src/Project/Animation/Animation.cpp
 	src/Project/Animation/Animation.h
-	src/Project/Payload/Payload.cpp
-	src/Project/Payload/Payload.h
 	src/Project/Power/Power.cpp
 	src/Project/Power/Power.h
 	src/PCH.cpp
