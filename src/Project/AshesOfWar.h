@@ -30,8 +30,8 @@ namespace Loki {
         void InstallMGEFEventSink();
         void InstallEquipEventSink();
 
-        static inline std::vector<RE::EffectSetting*> _effectVec;
-        static inline std::unordered_map<RE::EnchantmentItem*, RE::SpellItem*> _enchSpellMap;
+        static inline std::unordered_map<RE::FormID, std::string> _effectMap;
+        static inline std::unordered_map<std::string, std::pair<RE::FormID, RE::FormID>> _enchPowMap;
 
 	private:
 

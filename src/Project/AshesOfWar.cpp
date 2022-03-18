@@ -28,19 +28,17 @@ void Loki::AshesOfWar::AssignMaps() {
                 auto& spellTable = *elem.as_table();
 
                 auto eff = spellTable["EffectFormID"].value<RE::FormID>();
-                logger::info("Effect Form ID -> {}", *eff);
-                if (auto effect = RE::TESForm::LookupByID(*eff)->As<RE::EffectSetting>()) {
-                    _effectVec.push_back(effect);
-                }
+                  logger::info("Effect Form ID -> {}", *eff);
                 auto ench = spellTable["EnchantmentFormID"].value<RE::FormID>();
-                logger::info("Enchantment Form ID -> {}", *ench);
+                  logger::info("Enchantment Form ID -> {}", *ench);
                 auto pow = spellTable["PowerFormID"].value<RE::FormID>();
-                logger::info("Power Form ID -> {}", *pow);
-                if (auto enchantment = RE::TESForm::LookupByID(*ench)->As<RE::EnchantmentItem>(); enchantment) {
-                    if (auto power = RE::TESForm::LookupByID(*pow)->As<RE::SpellItem>(); power) {
-                        _enchSpellMap.insert_or_assign(enchantment, power);
-                    }
-                }
+                  logger::info("Power Form ID -> {}", *pow);
+                    std::pair<RE::FormID, RE::FormID> pair = { *ench, *pow };
+                auto esp = spellTable["EspName"].value<std::string>();
+                  logger::info("EspName -> {}", *esp);
+
+                _effectMap.insert_or_assign(*eff, *esp);
+                _enchPowMap.insert_or_assign(*esp, pair);
             }
             logger::info("Successfully read {}...", path.string());
 

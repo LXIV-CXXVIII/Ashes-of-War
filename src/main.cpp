@@ -79,10 +79,14 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface * a_
     SKSE::Init(a_skse);
     //SKSE::AllocTrampoline(16);
 
-    auto messaging = SKSE::GetMessagingInterface();
-    if (!messaging->RegisterListener("SKSE", SKSEMessageHandler)) { // add callbacks for TrueHUD
-        return false;
-    }
+    //auto messaging = SKSE::GetMessagingInterface();
+    //if (!messaging->RegisterListener("SKSE", SKSEMessageHandler)) { // add callbacks for TrueHUD
+    //    return false;
+    //}
+
+    auto ptr = Loki::AshesOfWar::GetSingleton();
+    ptr->InstallEquipEventSink();
+    ptr->InstallMGEFEventSink();
 
     return true;
 }

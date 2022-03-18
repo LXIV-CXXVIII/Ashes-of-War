@@ -17,17 +17,49 @@ auto Loki::GiveAOWPower::ProcessEvent(const RE::TESEquipEvent* a_event, RE::BSTE
     if (auto form = RE::TESForm::LookupByID(a_event->baseObject); form) {
         if (form->IsWeapon()) {
             if (auto objectWEAP = form->As<RE::TESObjectWEAP>(); objectWEAP) {
-                if (a_event->equipped) {
-                    for (auto idx : AshesOfWar::_enchSpellMap) {
-                        if (objectWEAP->formEnchanting->data.baseEnchantment->formID == idx.first->formID) {
-                            a_event->actor.get()->As<RE::Actor>()->AddSpell(idx.second);
+                if (auto dhandle = RE::TESDataHandler::GetSingleton(); dhandle) {
+                    if (a_event->equipped) {
+                        for (auto idx : AshesOfWar::_enchPowMap) {
+                            if (auto enchantment = dhandle->LookupForm<RE::EnchantmentItem>(idx.second.first, idx.first.c_str()); enchantment) {
+                                if (auto spell = dhandle->LookupForm<RE::SpellItem>(idx.second.second, idx.first.c_str()); spell) {
+
+                                    auto baseEnchantment = [objectWEAP]() -> RE::EnchantmentItem* {
+                                        auto formEnchant = objectWEAP->formEnchanting;
+                                        if (!formEnchant) { return nullptr; }
+                                        auto baseEnchant = formEnchant->data.baseEnchantment;
+                                        return baseEnchant ? baseEnchant : nullptr;
+                                    }();
+                                    if (baseEnchantment) {
+                                        if (baseEnchantment->formID == enchantment->formID) {
+                                            a_event->actor.get()->As<RE::Actor>()->AddSpell(spell);
+                                            break;
+                                        }
+                                    }
+
+                                }
+                            }
                         }
-                    }
-                } 
-                else {
-                    for (auto idx : AshesOfWar::_enchSpellMap) {
-                        if (objectWEAP->formEnchanting->data.baseEnchantment->formID == idx.first->formID) {
-                            a_event->actor.get()->As<RE::Actor>()->RemoveSpell(idx.second);
+                    } 
+                    else {
+                        for (auto idx : AshesOfWar::_enchPowMap) {
+                            if (auto enchantment = dhandle->LookupForm<RE::EnchantmentItem>(idx.second.first, idx.first.c_str()); enchantment) {
+                                if (auto spell = dhandle->LookupForm<RE::SpellItem>(idx.second.second, idx.first.c_str()); spell) {
+
+                                    auto baseEnchantment = [objectWEAP]() -> RE::EnchantmentItem* {
+                                        auto formEnchant = objectWEAP->formEnchanting;
+                                        if (!formEnchant) { return nullptr; }
+                                        auto baseEnchant = formEnchant->data.baseEnchantment;
+                                        return baseEnchant ? baseEnchant : nullptr;
+                                    }();
+                                    if (baseEnchantment) {
+                                        if (baseEnchantment->formID == enchantment->formID) {
+                                            a_event->actor.get()->As<RE::Actor>()->RemoveSpell(spell);
+                                            break;
+                                        }
+                                    }
+
+                                }
+                            }
                         }
                     }
                 }

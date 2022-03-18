@@ -12,11 +12,21 @@ auto Loki::PlayAOWAnimation::ProcessEvent(const RE::TESMagicEffectApplyEvent* a_
     }
 
     auto ptr = Loki::AshesOfWar::GetSingleton();
-    if (auto actor = a_event->target.get()->As<RE::Actor>(); actor) {
-        for (auto idx : AshesOfWar::_effectVec) {
-            if (a_event->magicEffect == idx->formID) {
-                actor->NotifyAnimationGraph("AOW_Start");
+    if (auto target = a_event->target.get(); target) {
+        if (auto actor = target->As<RE::Actor>(); actor) {
+            for (auto idx : AshesOfWar::_effectMap) {
+                if (auto dhandle = RE::TESDataHandler::GetSingleton(); dhandle) {
+                    if (auto effect = dhandle->LookupForm<RE::EffectSetting>(idx.first, idx.second); effect) {
+                        if (a_event->magicEffect == effect->formID) {
+                            actor->NotifyAnimationGraph("AOW_Start");
+                            break;
+                        }
+                    }
+                }
             }
+        }
+        else {
+            logger::info("Invalid actor ptr, TESObjectREFR FormID -> {}", target->formID);
         }
     }
 
