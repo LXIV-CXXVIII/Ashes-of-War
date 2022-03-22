@@ -31,15 +31,15 @@ auto Loki::GiveAOWPower::ProcessEvent(const RE::TESEquipEvent* a_event, RE::BSTE
 
                         if (a_event->equipped) {
                             if (auto IncomingEnchant = GetEnchant()) {
-                                if (IncomingEnchant->formID == enchantment->formID) {
+                                if (enchantment && IncomingEnchant->formID == enchantment->formID) {
                                     a_event->actor.get()->As<RE::Actor>()->AddSpell(spell);
                                     break;
                                 }
                             }
                         }
                         else {
-                            if (auto incomingEnchant = GetEnchant()) {
-                                if (incomingEnchant->formID == enchantment->formID) {
+                            if (auto incomingEnchant = GetEnchant(); enchantment) {
+                                if (enchantment && incomingEnchant->formID == enchantment->formID) {
                                     a_event->actor.get()->As<RE::Actor>()->RemoveSpell(spell);
                                     break;
                                 }
