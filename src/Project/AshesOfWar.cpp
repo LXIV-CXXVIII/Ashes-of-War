@@ -12,9 +12,8 @@ void Loki::AshesOfWar::InstallEquipEventSink() {
 
 void Loki::AshesOfWar::AssignMaps() {
 
-    constexpr auto path = L"Data/SKSE/Plugins/Spells";
+    constexpr auto path = L"Data/SKSE/Plugins/Ashes";
     constexpr auto ext = L".toml";
-    constexpr auto basecfg = L"Data/SKSE/Plugins/Spells/loki_Spells.toml";
 
     auto dataHandle = RE::TESDataHandler::GetSingleton();
 
@@ -28,11 +27,11 @@ void Loki::AshesOfWar::AssignMaps() {
                 auto& spellTable = *elem.as_table();
 
                 auto eff = spellTable["EffectFormID"].value<RE::FormID>();
-                  logger::info("Effect Form ID -> {}", *eff);
+                  logger::info("Effect Form ID -> {0:#x}", *eff);
                 auto ench = spellTable["EnchantmentFormID"].value<RE::FormID>();
-                  logger::info("Enchantment Form ID -> {}", *ench);
+                  logger::info("Enchantment Form ID -> {0:#x}", *ench);
                 auto pow = spellTable["PowerFormID"].value<RE::FormID>();
-                  logger::info("Power Form ID -> {}", *pow);
+                  logger::info("Power Form ID -> {0:#x}", *pow);
                     std::pair<RE::FormID, RE::FormID> pair = { *ench, *pow };
                 auto esp = spellTable["EspName"].value<std::string>();
                   logger::info("EspName -> {}", *esp);
@@ -55,21 +54,16 @@ void Loki::AshesOfWar::AssignMaps() {
         }
     };
 
-    logger::info("Reading _Spells.toml files...");
+    logger::info("Reading all .toml files...");
 
-    auto baseToml = std::filesystem::path(basecfg);
-    readToml(baseToml);
     if (std::filesystem::is_directory(path)) {
         for (const auto& file : std::filesystem::directory_iterator(path)) {
             if (std::filesystem::is_regular_file(file) && file.path().extension() == ext) {
-                auto filePath = file.path();
-                if (filePath != basecfg) {
-                    readToml(filePath);
-                }
+                readToml(file.path());
             }
         }
     }
 
-    logger::info("Finished reading _Spells.toml files");
+    logger::info("Finished reading all .toml files");
 
 }
