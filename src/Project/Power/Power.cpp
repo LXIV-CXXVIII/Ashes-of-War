@@ -1,6 +1,14 @@
 #include "Power.h"
 #include "Project/AshesOfWar.h"
 
+RE::EnchantmentItem* Loki::InventoryManager::GetExtraDataImpl(RE::InventoryEntryData* a_1) {
+
+    using func_t = decltype (Loki::InventoryManager::GetExtraDataImpl);
+    REL::Relocation<func_t> func { REL::ID(15788) };
+    return func(a_1);
+
+}
+
 Loki::GiveAOWPower* Loki::GiveAOWPower::GetSingleton() {
     static GiveAOWPower singleton;
     return &singleton;
@@ -13,6 +21,26 @@ auto Loki::GiveAOWPower::ProcessEvent(const RE::TESEquipEvent* a_event, RE::BSTE
     if (!a_event->actor) {
         return RE::BSEventNotifyControl::kContinue;
     }
+    /**
+    auto inv = a_event->actor->GetInventory();
+
+
+    for (auto idx : *(inv.begin()->second.second->extraLists)) {
+        auto type = idx->GetByType(RE::ExtraDataType::kEnchantment);
+        auto huh = type->GetType();
+
+        RE::EnchantmentItem* item;
+        if (auto dataHandle = RE::TESDataHandler::GetSingleton()) {
+            item = dataHandle->LookupForm<RE::EnchantmentItem>(0xD62, "loki_POISE.esp");
+        }
+        
+
+        for (auto a = idx->begin(); a != idx->end(); ++a); {
+            
+        }
+    }
+    */
+    
 
     if (auto form = RE::TESForm::LookupByID(a_event->baseObject)) {
         if (form->IsWeapon()) {
@@ -26,12 +54,14 @@ auto Loki::GiveAOWPower::ProcessEvent(const RE::TESEquipEvent* a_event, RE::BSTE
                             return formEnchant ? formEnchant : nullptr;
                         };
 
+                        objectWEAP->formEnchanting->effects.begin();
+                        
                         auto enchantment = dhandle->LookupForm<RE::EnchantmentItem>(idx.second.first, idx.first.c_str());
                         auto spell = dhandle->LookupForm<RE::SpellItem>(idx.second.second, idx.first.c_str());
 
                         if (a_event->equipped) {
                             if (auto IncomingEnchant = GetEnchant()) {
-                                if (enchantment && (IncomingEnchant->formID == enchantment->formID)) {
+                                if (enchantment && IncomingEnchant->formID == enchantment->formID) {
                                     a_event->actor.get()->As<RE::Actor>()->AddSpell(spell);
                                     break;
                                 }
@@ -39,7 +69,7 @@ auto Loki::GiveAOWPower::ProcessEvent(const RE::TESEquipEvent* a_event, RE::BSTE
                         }
                         else {
                             if (auto incomingEnchant = GetEnchant()) {
-                                if (enchantment && (incomingEnchant->formID == enchantment->formID)) {
+                                if (enchantment && incomingEnchant->formID == enchantment->formID) {
                                     a_event->actor.get()->As<RE::Actor>()->RemoveSpell(spell);
                                     break;
                                 }

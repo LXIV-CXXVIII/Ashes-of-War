@@ -20,4 +20,15 @@ namespace Loki {
         auto operator=(GiveAOWPower&&)->GiveAOWPower & = delete;
     };
 
+    class InventoryManager {
+    
+    public:
+        static RE::EnchantmentItem* GetExtraDataImpl(RE::InventoryEntryData* a_1);
+
+    private:
+
+    protected:
+    
+    };
+
 };

@@ -12,10 +12,10 @@ auto Loki::PlayAOWAnimation::ProcessEvent(const RE::TESMagicEffectApplyEvent* a_
     }
 
     auto ptr = Loki::AshesOfWar::GetSingleton();
-    if (auto target = a_event->target.get(); target) {
-        if (auto actor = target->As<RE::Actor>(); actor) {
+    if (auto target = a_event->target.get()) {
+        if (auto actor = target->As<RE::Actor>()) {
             for (auto idx : AshesOfWar::_effectMap) {
-                if (auto dhandle = RE::TESDataHandler::GetSingleton(); dhandle) {
+                if (auto dhandle = RE::TESDataHandler::GetSingleton()) {
                     if (auto effect = dhandle->LookupForm<RE::EffectSetting>(idx.first, idx.second); effect) {
                         if (a_event->magicEffect == effect->formID) {
                             actor->NotifyAnimationGraph("AOW_Start");
